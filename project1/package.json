@@ -1,0 +1,32 @@
+{
+  "name": "project1",
+  "version": "1.0.0",
+  "description": "A demo project",
+  "main": "bin/www.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=dev nodemon ./bin/www.js",
+    "prd": "cross-env NODE_ENV=production nodemon ./bin/www.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qxzzwh/nodejs.git"
+  },
+  "keywords": [
+    "demo"
+  ],
+  "author": "qxz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qxzzwh/nodejs/issues"
+  },
+  "homepage": "https://github.com/qxzzwh/nodejs#readme",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "express": "^4.17.3",
+    "lodash": "^4.17.21",
+    "mariadb": "^3.0.0",
+    "nodemon": "^2.0.15",
+    "redis": "^4.0.6"
+  }
+}

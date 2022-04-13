@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolg Detail</title>
+</head>
+
+<body>
+
+    <div class="title-wrapper">
+        <p class="title" id="blog_title">Title Text</p>
+        <div class="info-wrapper">
+            <span>
+                <a href="/index.html" id="author">author</a>
+            </span>
+            <span id="createtime">createtime</span>
+        </div>
+    </div>
+    <div>
+        <p id="content">Content</p>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.23.0/locale/zh-cn.js"></script>
+    <script>
+        //send request:
+        function get(url) {
+            return $.get(url)
+        }
+        //display formatted time
+        function getFormatDate(dt) {
+            return moment(dt).format('LL')
+        }
+        function getUrlParams() {
+            // window.alert(location)
+            let paramStr = location.href.split('?')[1] || ''
+            paramStr = paramStr.split('#')[0]
+            // window.alert(paramStr)
+            const result = {}
+            paramStr.split('&').forEach(itemStr => {
+                const arr = itemStr.split('=')
+                const key = arr[0]
+                const val = arr[1]
+                result[key] = val
+            })
+            return result
+        }
+        //get dom elements
+        // const $container = $('#blog-container')
+
+        //create url
+        let url = '/api/blog/detail'
+        const urlParams = getUrlParams()
+        if (urlParams.id) {
+            url += '?id=' + urlParams.id
+        }
+        //get data
+        get(url).then(res => {
+            if (res.errno !== 0) {
+                alert('data error!')
+                return
+            }
+            //get blog list
+            const data = res.data;
+
+            document.getElementById("blog_title").innerText = data['title'];
+            document.getElementById("author").innerText = data['author'];
+            document.getElementById("author").href = "/index.html?author=" + data['author'];
+            document.getElementById("createtime").innerText = getFormatDate(data['createtime']);
+            document.getElementById("content").innerText = data['content'];
+        })
+
+    </script>
+
+    </script>
+
+
+</body>
+
+</html>
