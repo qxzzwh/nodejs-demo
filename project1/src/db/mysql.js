@@ -19,4 +19,6 @@ function exec_sql(sql) {
     })
 }
 
-module.exports = { exec_sql }
+module.exports = {
+    exec_sql
+}

@@ -8,9 +8,18 @@
     <script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.23.0/locale/zh-cn.js"></script>
     <script>
-        //send request:
+        //send  GET request:
         function get(url) {
             return $.get(url)
+        }
+        //send POST request:
+        function post(url, data = {}) {
+            return $.ajax({
+                type: 'post',
+                url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+            })
         }
         function getUrlParams() {
             let paramStr = location.href.split('?')[1] || ''
@@ -29,19 +38,22 @@
             const $container = $('#blog-list')
             $container.empty()
             //create url
-            let url = '/api/blog/list'
+            let url = '/api/blog/list?isadmin=1'
             let keyword = document.getElementById("search-text").value
             const urlParams = getUrlParams()
-            if (urlParams.author) {
-                url += '?author=' + urlParams.author
-                if (keyword) {
-                    url += '&keyword=' + keyword
-                }
-            } else {
-                if (keyword) {
-                    url += '?keyword=' + keyword
-                }
+            if (urlParams.keyword) {
+                url += '&keyword=' + urlParams.keyword
             }
+            // if (urlParams.author) {
+            //     url += '?author=' + urlParams.author
+            //     if (keyword) {
+            //         url += '&keyword=' + keyword
+            //     }
+            // } else {
+            //     if (keyword) {
+            //         url += '?keyword=' + keyword
+            //     }
+            // }
             //get data
             get(url).then(res => {
                 if (res.errno !== 0) {

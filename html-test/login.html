@@ -18,7 +18,6 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var res = this.responseText;
                     var res_obj = eval("(" + res + ")");
-                    window.alert(res_obj);
                     if (res_obj.errno === 0) {
                         location.replace('index.html');
                     } else if (res_obj.errno === -1) {

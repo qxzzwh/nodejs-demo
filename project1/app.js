@@ -1,3 +1,5 @@
+const { get, set } = require('./src/db/redis')
+const { access } = require('./src/utils/log')
 const handleUserRouter = require('./src/router/user.js')
 const handleBlogRouter = require('./src/router/blog.js')
 //Get cookie expire time
@@ -14,7 +16,6 @@ const getPostData = (req) => {
             resolve({});
             return;
         }
-        console.log(req.headers['content-type'])
         if (req.headers['content-type'] !== 'application/json') {
             resolve({});
             return;
@@ -37,6 +38,7 @@ const getPostData = (req) => {
 }
 
 const serverHandle = (req, res) => {
+    access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now().toLocaleString()}`)
     // set return format JSON
     res.setHeader('Content-type', 'application/json');
     const port = 3000;
@@ -46,7 +48,7 @@ const serverHandle = (req, res) => {
     //解析query
     const search = url.search;
     const query = new URLSearchParams(url.search);
-    req.query = query;
+    req.query = Object.fromEntries(query);
     //解析Cookie
     req.cookie = {}
     const cookieString = req.headers.cookie || ""; //k1=v1; k2=v2 ...

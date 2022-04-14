@@ -1,4 +1,5 @@
 const { exec_sql } = require('../db/mysql.js');
+const xss = require('xss')
 const getList = (author, keyword) => {
     //返回数据
     let sql = `SELECT * from blogs where 1=1 `
@@ -20,8 +21,8 @@ const getDetail = (id) => {
 
 const newBlog = (blogData = {}) => {
     //blogData 是一个博客对象，包含title, content, author属性
-    const title = blogData.title;
-    const content = blogData.content;
+    const title = xss(blogData.title);
+    const content = xss(blogData.content);
     const author = blogData.author;
     const createtime = Date.now();
 
@@ -36,8 +37,8 @@ const newBlog = (blogData = {}) => {
 const updateBlog = (id, blogData = {}) => {
     //blogData 是一个博客对象，包含title, content属性
     //id - 要更新博客的id
-    const title = blogData.title;
-    const content = blogData.content;
+    const title = xss(blogData.title);
+    const content = xss(blogData.content);
     const sql = `update blogs set title='${title}', content='${content}' where id=${id};`
 
     return exec_sql(sql).then(updateData => {
