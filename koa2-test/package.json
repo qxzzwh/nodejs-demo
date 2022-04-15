@@ -1,0 +1,16 @@
+{
+  "name": "koa2-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fresh": "^0.5.2",
+    "koa2": "^2.0.0-alpha.7"
+  }
+}

@@ -33,6 +33,8 @@ app.set('trust proxy', 1);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+//logger
 const ENV = process.env.NODE_ENV;
 
 if (ENV != 'production') {

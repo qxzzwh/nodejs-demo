@@ -16,7 +16,7 @@ router.post('/login', function (req, res, next) {
             res.json(
                 new SuccessModel()
             )
-            // return;
+            return;
         } else {
             res.json(
                 new ErrorModel("登录失败")
@@ -25,18 +25,18 @@ router.post('/login', function (req, res, next) {
     })
 });
 
-router.get('/login-test', (req, res, next) => {
-    if (req.session.username) {
-        res.json({
-            errno: 0,
-            msg: 'logged in'
-        })
-    } else {
-        es.json({
-            errno: -1,
-            msg: ' not login yet'
-        })
-    }
+// router.get('/login-test', (req, res, next) => {
+//     if (req.session.username) {
+//         res.json({
+//             errno: 0,
+//             msg: 'logged in'
+//         })
+//     } else {
+//         es.json({
+//             errno: -1,
+//             msg: ' not login yet'
+//         })
+//     }
 })
 
 // router.get('/session-test', (req, res, next) => {
