@@ -1,3 +1,4 @@
+const { set } = require('../../../blog-express/app.js');
 const { login } = require('../controller/user.js');
 const { ErrorModel, SuccessModel } = require('../model/resModel.js')
 const handleUserRouter = (req, res) => {
@@ -13,6 +14,7 @@ const handleUserRouter = (req, res) => {
                 //set session
                 req.session.username = data.username;
                 req.session.realname = data.realname;
+                // set(req.sessionId, req.session);
                 // console.log(req.session);
                 return new SuccessModel();
             } else {

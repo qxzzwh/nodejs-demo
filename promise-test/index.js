@@ -42,12 +42,23 @@ function getFileContent(filename) {
     return promise;
 }
 
-getFileContent('a.json').then(aData => {
-    console.log('a data', aData);
-    return getFileContent(aData.next);
-}).then(bData => {
-    console.log('b data', bData);
-    return getFileContent(bData.next);
-}).then(cData => {
-    console.log('c data', cData);
-})
+// getFileContent('a.json').then(aData => {
+//     console.log('a data', aData);
+//     return getFileContent(aData.next);
+// }).then(bData => {
+//     console.log('b data', bData);
+//     return getFileContent(bData.next);
+// }).then(cData => {
+//     console.log('c data', cData);
+// })
+
+async function readFileData() {
+    const aData = await getFileContent('a.json')
+    console.log(aData)
+    const bData = await getFileContent('b.json')
+    console.log(bData)
+    const cData = await getFileContent('c.json')
+    console.log(cData)
+}
+
+readFileData()

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
+    <title>Create a blog</title>
 </head>
 
 <body>
@@ -37,6 +37,7 @@
     async function postFormFieldsAsJson({ url, formData }) {
         let formDataObject = Object.fromEntries(formData.entries());
         let formDataJsonString = JSON.stringify(formDataObject);
+        // window.alert(formDataJsonString);
         let fetchOptions = {
             method: "POST",
             headers: {

@@ -17,12 +17,12 @@ redisClient.on('error', err => {
     console.error(err)
 });
 redisClient.connect().then(() => {
-    redisClient.set('myname', 'zhangsan2', redis.print)
+    redisClient.set('myname2', 'zhangsan2', redis.print)
         .then(() => {
             redisClient.get('myname')
                 .then(val => {
                     console.log('val ', val)
-                    redisClient.quit()
+			 redisClient.quit()
                 })
                 .catch(err => {
                     console.log(err)
