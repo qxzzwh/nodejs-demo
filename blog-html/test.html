@@ -1,0 +1,183 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Test Page</title>
+    <style>
+        p {
+            margin: 8px;
+            font-size: 20px;
+            color: blue;
+            cursor: pointer;
+        }
+
+        b {
+            text-decoration: underline;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        span {
+            color: #008;
+        }
+
+        span.sogreen {
+            color: green;
+            font-weight: bolder;
+        }
+
+        form {
+            border: 2px green solid;
+            padding: 2px;
+            margin: 0;
+            background: #efe;
+        }
+
+        div {
+            color: red;
+        }
+
+        fieldset {
+            margin: 1px;
+            padding: 3px;
+        }
+
+        /* div,
+        span {
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 5px;
+            background: #bfa;
+            float: left;
+            font-size: 14px;
+        } */
+
+        div#small {
+            width: 60px;
+            height: 25px;
+            font-size: 12px;
+            background: #fab;
+        }
+    </style>
+    <script src="jquery-3.6.0.js"></script>
+    <script src="luxon.js"></script>
+</head>
+
+<!-- <script>
+    $(document).ready(function () {
+        window.alert("hello world");
+    })
+</script> -->
+
+<body>
+
+    <p>
+        <b>Click</b> to change the <span id="tag">html</span>
+    </p>
+    <p>
+        to a <span id="text">text</span> node.
+    </p>
+    <p>
+        This <button name="nada">button</button> does nothing.
+    </p><br>
+
+    <script>
+        $("p").click(function () {
+            var htmlString = $(this).html();
+            alert(htmlString);
+            $(this).text(htmlString);
+        });
+    </script>
+    <div>
+        <span>John,<b>1</b></span>
+        <span>Karl,<b>2</b></span>
+        <span>Brandon <b>3</b></span>
+    </div>
+    <div>
+        <span>Glen,</span>
+        <span>Tane,</span>
+        <span>Ralph</span>
+    </div>
+    <script>
+        $("div span")
+            .css("text-decoration", "underline")
+            .hover(function () {
+                $(this).addClass("sogreen");
+            }, function () {
+                $(this).removeClass("sogreen");
+            });
+    </script>
+    <!-- <script>
+        $("div span:first-child")
+            .css("text-decoration", "underline")
+            .hover(function () {
+                $(this).addClass("sogreen");
+            }, function () {
+                $(this).removeClass("sogreen");
+            });
+    </script> -->
+    <ul class="topnav">
+        <li>Item 1</li>
+        <li>Item 2
+            <ul>
+                <li>Nested item 1</li>
+                <li>Nested item 2</li>
+                <li>Nested item 3</li>
+            </ul>
+        </li>
+        <li>Item 3</li>
+    </ul>
+
+    <script>
+        $("ul.topnav > li").css("border", "3px double blue");
+    </script>
+    <form>
+        <div>Form is surrounded by the green border.</div>
+
+        <label for="name">Child of form:</label>
+        <input name="name" id="name">
+
+        <fieldset>
+            <label for="newsletter">Grandchild of form, child of fieldset:</label>
+            <input name="newsletter" id="newsletter">
+        </fieldset>
+    </form>
+    Sibling to form: <input name="none">
+
+    <script>
+        $("form input").css("border", "2px dotted blue");
+        $("form fieldset input").css("backgroundColor", "yellow");
+    </script>
+    <form>
+        <label for="name">Name:</label>
+        <input name="name" id="name">
+        <fieldset>
+            <label for="newsletter">Newsletter:</label>
+            <input name="newsletter" id="newsletter">
+        </fieldset>
+    </form>
+    <input name="none"><br>
+
+    <script>
+        $("label + input").css("color", "blue").val("Labeled!");
+    </script>
+
+    <div>div (doesn't match since before #prev)</div>
+    <span id="prev">span#prev</span>
+    <div>div sibling</div>
+    <div>div sibling <div id="small">div niece</div>
+    </div>
+    <span>span sibling (not div)</span>
+    <div>div sibling</div>
+
+    <script>
+        $("#prev ~ div").css("border", "3px groove blue");
+    </script>
+
+
+</body>
+
+</html>

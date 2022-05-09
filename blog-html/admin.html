@@ -1,0 +1,124 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration Center</title>
+    <script src="jquery-3.6.0.js"></script>
+    <style type="text/css">
+        tr {
+            background: #9999CC;
+            font-size: 20px;
+            border: 3px solid black;
+        }
+    </style>
+    <script>
+        //send  GET request:
+        function get(url) {
+            return $.get(url)
+        }
+        //send POST request:
+        function post(url, data = {}) {
+            return $.ajax({
+                type: 'post',
+                url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+            })
+        }
+        function search() {
+            //create url
+            let url = '/api/blog/list?isadmin=1';
+
+            //set keyword
+            let $keyword = $(("#search-text")).val() || "";
+            url += '&keyword=' + $keyword
+            get(url)
+                .done((res) => {
+                    if (res.errno !== 0) {
+                        alert('data error!');
+                        return
+                    }
+                    //get blog list
+                    const data = res.data || []
+                    //get empty dom elements
+                    const $cTable = $("#blog-list tbody").empty();
+                    data.forEach(item => {
+                        $cTable.append($(`
+                            <tr >
+                                <td>${item.title}</td>
+                                <td><a href="/edit.html?id=mod${item.id}" id="mod${item.id}">Modify</a></td>
+                                <td><span id="${item.id}">Delete</span></td>
+                            </tr>
+                        `))
+                    });
+                })
+
+        };
+        $(search);
+
+        $(function () {
+            const $cTable = $("#blog-list tbody");
+            $cTable.click(function (e) {
+                // alert($(e.target).attr("id"));
+                const $target = $(e.target);
+
+                if ($target.text().indexOf("Del") > -1) {
+                    const $t = $target.parent().parent().children().eq(0).text();
+                    const b = window.confirm(`Are you sure to delete the blog ${$t}?`);
+                    const id = parseInt($target.attr("id"));
+                    if (b) {
+                        let url = '/api/blog/delete';
+                        url += "?id=" + id;
+                        post(url)
+                            .done((res) => {
+                                if (res.errno !== 0) {
+                                    alert('data error!');
+                                    return
+                                } else {
+                                    alert('Delete blog successful!');
+                                    $target.parent().parent().remove();
+                                    return;
+                                }
+                            })
+
+                    } else {
+                        return;
+                    }
+
+
+                }
+
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+    <h1>Administration Center</h1>
+    <span><a href="new.html">Create a new blog</a></span>
+    <div>
+        <input type="search" name="search-text" id="search-text">
+        <input type="button" value="Search" id="search-button">
+    </div>
+    <div>
+        <table id="blog-list" style="border: 1px solid red;">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td colspan="2">Operation</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <span id="warn"></span>
+    <script>
+        $(document).ready($("#search-button").click(search));
+    </script>
+</body>
+
+</html>

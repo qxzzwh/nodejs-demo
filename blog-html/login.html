@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <script src="luxon.js"></script>
+    <script src="jquery-3.6.0.js"></script>
+    <style type="text/css">
+        div {
+            width: 200px;
+            height: 120px;
+            margin: 20px;
+            background: #9999CC;
+            border: #000 1px solid;
+            float: left;
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            align-items: center;
+            padding-left: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Log in 2</h1>
+    <div>
+        <form action="/api/user/login" method="POST" id="myform">
+            <label for="im">User name: </label>
+            <input type=" text" name="username" id="um" value="your user name">
+            <label for="pwd">Password:</label>
+            <input type="password" name="password" id="pwd">
+            <input type="submit" value="Login">
+        </form>
+        <P>
+            <span><input type="text" name="result" id="myres" style="border-width: 0; color: red;"><br></span>
+        </P>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#um").focus(function () {
+                $curVal = $(this).val();
+                if ($curVal == this.defaultValue) {
+                    $(this).val("");
+                }
+            })
+            $("#um").blur(function () {
+                if ($(this).val() == "") {
+                    $(this).val(this.defaultValue);
+                }
+            })
+        })
+        // var myXhttp = null;
+        // function submitForm() {
+        //     var myForm = document.getElementById("myform");
+        //     myXhttp = new XMLHttpRequest();
+        //     var url = myForm.attributes['action'].value; //POST method.
+
+        //     var formData = new FormData(myForm);
+        //     var formDataObject = Object.fromEntries(formData.entries());
+        //     var formDataJsonString = JSON.stringify(formDataObject);
+        //     myXhttp.addEventListener("readystatechange", function () {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             var res = this.responseText;
+        //             var res_obj = eval("(" + res + ")");
+        //             if (res_obj.errno === 0) {
+        //                 location.replace('index.html');
+        //             } else if (res_obj.errno === -1) {
+        //                 document.getElementById("myres").value = "User name or password is not correct!"
+        //             }
+        //         }
+        //     });
+
+        //     myXhttp.open("POST", url, true); //POST method.
+        //     myXhttp.setRequestHeader("Content-Type", "application/json"); //POST method.
+        //     myXhttp.send(formDataJsonString); //POST method.
+        // }
+        $("#myform").submit(function (e) {
+            // Stop form from submitting normally
+            e.preventDefault();
+
+            // Get some values from elements on the page:
+            const formData = new FormData(e.currentTarget);
+            const formDataObject = Object.fromEntries(formData.entries());
+            const formDataJsonString = JSON.stringify(formDataObject);
+
+            // const username = $form.find("input[name='username']").val();
+            // const password = $form.find("input[name='password']").val();
+            // let postData = {
+            //     "username": username,
+            //     "password": password
+            // };
+            const url = $(this).attr("action");
+            const settings = {
+                url: url,
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: formDataJsonString
+            };
+            const result = $.ajax(settings);
+            result.done(function (res) {
+                // alert(res.errno);
+                if (res.errno === 0) {
+                    location.replace('admin.html');
+                } else if (res.errno == -1) {
+                    $("#myres").val("User name or password is not correct!");
+                    // document.getElementById("myres").value = "User name or password is not correct!"
+                }
+            });
+            //Send the data using post
+            // var posting = $.post(url, formDataJsonString);
+
+            // // Put the results in a div
+            // posting.done(function (data) {
+            //     console.log(data.errno)
+            //     // const errno = $(data).find("#errno");
+            //     if (data.errno === 0) {
+            //         location.replace('index.html');
+            //     } else if (data.errno === -1) {
+            //         $("#myres").val("User name or password is not correct!");
+            //         // document.getElementById("myres").value = "User name or password is not correct!"
+            //     }
+
+            // });
+        })
+
+
+    </script>
+</body>
+
+</html>

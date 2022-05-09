@@ -30,14 +30,18 @@
             color: #999;
         }
     </style>
+    <script src="luxon.js"></script>
+    <script src="jquery-3.6.0.js"></script>
 </head>
 
 <body>
     <h1>Blog Home Page</h1>
     <div id="blog-container"></div>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
-    <script src="https://cdn.bootcss.com/moment.js/2.23.0/locale/zh-cn.js"></script>
+    <!-- <script src="jquery-3.6.0.js"></script>
+    <script src="luxon.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/moment.js/2.23.0/locale/zh-cn.js"></script> -->
     <script>
         //send request:
         function get(url) {
@@ -45,7 +49,10 @@
         }
         //display formatted time
         function getFormatDate(dt) {
-            return moment(dt).format('LL')
+            // return moment(dt).format('LL')
+            const DateTime = luxon.DateTime;
+
+            return DateTime.fromMillis(dt).toISODate();
         }
         function getUrlParams() {
             let paramStr = location.href.split('?')[1] || ''
@@ -76,6 +83,7 @@
             //get blog list
             const data = res.data || []
             data.forEach(item => {
+                // alert(typeof (item.createtime))
                 $container.append($(`
                     <div class="title-wrapper">
                         <p class="title">
